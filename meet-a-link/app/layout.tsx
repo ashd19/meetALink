@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
+import { ThemeProvider } from "@/components/theme-provider"
+
 import {
   ClerkProvider,
   SignInButton,
@@ -31,9 +33,18 @@ export default function RootLayout({
 }>) {
  return (
     <ClerkProvider >
-      <html lang="en">
+      <html lang="en"  suppressHydrationWarning>
         <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
-          <header className="flex justify-end items-center p-4 gap-4 h-16 bg-black text-white">
+          <ThemeProvider
+            attribute="class"
+            defaultTheme="system"
+            enableSystem
+            disableTransitionOnChange
+          >
+          <header className="flex justify-end items-center p-4 gap-4 h-16 ">
+            <div className="mr-300 text-white text-2xl font-semibold font-sans">
+              MeetAlink
+            </div>
             <SignedOut>
               <SignInButton />
               <SignUpButton>
@@ -47,6 +58,7 @@ export default function RootLayout({
             </SignedIn>
           </header>
           {children}
+          </ThemeProvider>
         </body>
       </html>
     </ClerkProvider>
